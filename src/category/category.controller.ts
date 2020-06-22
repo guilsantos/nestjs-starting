@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Req } from '@nestjs/common';
+import { Controller, Get, Post, Req, Render } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Category } from './category.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Request } from 'express';
 
 @Controller('categories')
 export class CategoryController {
@@ -14,6 +15,13 @@ export class CategoryController {
     @Get()
     index(): Promise<Category[]> {
         return this.categoryRepo.find()
+    }
+
+    @Get('list')
+    @Render('category_list')
+    async category_list() {
+        const categories = await this.categoryRepo.find()
+        return { layout: false, categories }
     }
 
     @Get('create')

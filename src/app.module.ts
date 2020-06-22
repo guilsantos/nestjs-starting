@@ -5,6 +5,7 @@ import { CategoryController } from './category/category.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config'
 import { Category } from './category/category.entity';
+import { CategoryModule } from './category/category.module';
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { Category } from './category/category.entity';
       database: process.env.TYPEORM_DATABASE,
       entities: [Category],
     }),
-    TypeOrmModule.forFeature([Category])
+    TypeOrmModule.forFeature([Category]),
+    CategoryModule
   ],
   controllers: [AppController, CategoryController],
   providers: [AppService],
